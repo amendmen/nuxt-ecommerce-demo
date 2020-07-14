@@ -9,20 +9,23 @@
           <th>Qty</th>
           <th>Unit Price</th>
           <th>Total Price</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <CartItem
           v-for="item in cartItems"
           :key="item.id"
+          :item-id="item.id"
           :name="item.name"
           :image-url="item.imageUrl"
           :quantity="item.quantity"
-          :unit-price="item.price"
-          :total-price="getItemTotalPrice(item.price, item.quantity)"
+          :unit-price="item.unitPrice"
+          :total-price="item.totalPrice"
         />
       </tbody>
     </table>
+    <div class="cart__total">Total: ${{ totalPrice }}</div>
   </div>
 </template>
 
@@ -37,10 +40,8 @@ export default {
     cartItems() {
       return this.$store.state.cart.items
     },
-  },
-  methods: {
-    getItemTotalPrice(unitPrice, quantity) {
-      return unitPrice * quantity
+    totalPrice() {
+      return this.$store.getters['cart/totalPrice']
     },
   },
 }
@@ -60,6 +61,11 @@ export default {
 
   &__product-heading {
     padding-left: 1rem;
+  }
+
+  &__total {
+    text-align: right;
+    font-size: 28px;
   }
 
   thead {
