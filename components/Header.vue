@@ -6,16 +6,27 @@
     <div class="app-header__links-wrapper">
       <NuxtLink to="/shop" class="app-header__link">SHOP</NuxtLink>
       <NuxtLink to="/shop" class="app-header__link">CONTACT</NuxtLink>
+      <NuxtLink to="/cart" class="app-header__btn-cart">
+        <CartIcon />
+        <span class="app-header__cart-items-count">{{ cartItemsCount }}</span>
+      </NuxtLink>
     </div>
   </header>
 </template>
 
 <script>
 import AppLogo from '~/components/AppLogo'
+import CartIcon from '~/components/CartIcon'
 
 export default {
   components: {
     AppLogo,
+    CartIcon,
+  },
+  computed: {
+    cartItemsCount() {
+      return this.$store.getters['cart/itemsCount']
+    },
   },
 }
 </script>
@@ -51,6 +62,18 @@ export default {
     &:hover {
       text-decoration: underline;
     }
+  }
+
+  &__btn-cart {
+    position: relative;
+  }
+
+  &__cart-items-count {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
+    font-size: 12px;
   }
 }
 </style>

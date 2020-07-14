@@ -5,15 +5,24 @@
       <div class="collection-item__name">{{ name }}</div>
       <div class="collection-item__price">${{ price }}</div>
       <div class="collection-item__btn-wrapper">
-        <div class="collection-item__btn-add">Add to cart</div>
+        <div class="collection-item__btn-add" @click="onAddToCart">
+          Add to cart
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import addToCart from '~/mixins/addToCart'
+
 export default {
+  mixins: [addToCart],
   props: {
+    itemId: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -30,6 +39,18 @@ export default {
   computed: {
     imgStyle() {
       return { backgroundImage: `url(${this.imageUrl}) ` }
+    },
+  },
+  methods: {
+    onAddToCart() {
+      const item = {
+        id: this.itemId,
+        name: this.name,
+        price: this.price,
+        imageUrl: this.imageUrl,
+      }
+
+      this.addToCart(item)
     },
   },
 }

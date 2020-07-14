@@ -5,6 +5,7 @@
       <CollectionItem
         v-for="item in items"
         :key="item._id"
+        :item-id="item._id"
         :name="item.name"
         :price="item.price"
         :image-url="item.imageUrl"
